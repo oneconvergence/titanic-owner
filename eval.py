@@ -4,7 +4,7 @@ import random
 import click
 
 import pandas as pd
-
+import os
 
 @click.command()
 @click.argument("input_file", type=click.Path(exists=True))
@@ -24,7 +24,11 @@ def eval(input_file, output_dir):
     with open(output_dir + "/metrics.json", "w") as f:
         json.dump(metrics, f)
     print(f"Accuracy: {round(accuracy,2)}")
-
+    files = []
+    for root, directories, filenames in os.walk('/mnt/dataset'):
+        for filename in filenames:
+            files.append(os.path.join(root,filename))
+    print("Files mounted at /mnt/dataset:", files)
 
 if __name__ == "__main__":
     eval()
